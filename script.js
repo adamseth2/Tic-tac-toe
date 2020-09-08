@@ -1,11 +1,13 @@
 const player1 = {
   name: 'Player 1',
+  scoreId: 'player1Score',
   icon: 'O',
   iconColor: 'red',
   score: 0,
 };
 const player2 = {
   name: 'Player 2',
+  scoreId: 'player2Score',
   icon: 'X',
   iconColor: 'blue',
   score: 0,
@@ -55,16 +57,15 @@ function clickBoard(squareId) {
     clickedCell.style.cursor = 'not-allowed';
     clickedCell.style.color = currentPlayer.iconColor;
     player1Turn = !player1Turn;
-    if (checkTie()) console.log('Tie Game');
     if (checkWin(player1)) gameOver(player1);
     else if (checkWin(player2)) gameOver(player2);
   }
 }
 function gameOver(player) {
-  document.getElementById('player1Score').innerText = ++player.score;
+  document.getElementById(player.scoreId).innerText = ++player.score;
   let endGame = document.querySelector('#end-game');
   endGame.style.display = 'grid';
-  endGame.innerText = 'Player 1 has Won!';
+  endGame.innerText = `${player.name} has Won!`;
   cells.forEach(cell => (cell.style.cursor = 'default'));
 }
 function checkWin(player) {
@@ -83,23 +84,23 @@ function checkWin(player) {
   }
   return false;
 }
-function checkTie() {
-  let temp = '';
-  for (let i = 0; i < tttBoard.length; i++) {
-    if (tttBoard[i] === '') temp += i;
-  }
+// function checkTie() {
+//   let temp = '';
+//   for (let i = 0; i < tttBoard.length; i++) {
+//     if (tttBoard[i] === '') temp += i;
+//   }
 
-  if (temp.length !== 1) return false;
+//   if (temp.length !== 1) return false;
 
-  let currentPlayer;
-  if (player1Turn) currentPlayer = player1;
-  else currentPlayer = player2;
+//   let currentPlayer;
+//   if (player1Turn) currentPlayer = player1;
+//   else currentPlayer = player2;
 
-  tttBoard[parseInt(temp)] = currentPlayer.icon;
+//   tttBoard[parseInt(temp)] = currentPlayer.icon;
 
-  if (checkWin(currentPlayer)) return false;
-  return true;
-}
+//   if (checkWin(currentPlayer)) return false;
+//   return true;
+// }
 /*
 function checkTie() {
     let unwinnableCombo = 0;
